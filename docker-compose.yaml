@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports: 
+      - 8080:80
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+
+networks:
+  reverse-proxy-network:
+    external: true
